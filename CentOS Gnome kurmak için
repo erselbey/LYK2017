@@ -1,0 +1,41 @@
+CentOS Gnome kurmak için
+
+yum groups install "GNOME Desktop"
+
+veya
+
+yum groupinstall "GNOME Desktop"
+
+-----------------------------------------------------------------
+
+Gnome'u bir GUI ile ağ altyapı hizmetlerini çalıştırmak için bir RHEL 7 veya CentOS Linux 7 sunucusuna kurmak için şunu girin:
+
+yum groups install "Server with GUI"
+
+veya
+
+yum groupinstall "Server with GUI"
+
+-----------------------------------------------------------------
+
+Peki ben Gnome ile açılması için ne yapabilirim?
+
+Şu komutu giriyoruz:
+
+systemctl set-default graphical.target
+
+-----------------------------------------------------------------
+
+GUI oturum açmayı komut satırından nasıl başlatabilirim veya başlatırım?
+
+systemctl start graphical.target
+
+Bkznz: https://www.cyberciti.biz/media/new/faq/2015/05/centos-rhel-7-gnome-login-screen.jpg
+
+--------------------------------------------------------------------------------------------------------------
+
+Terminal arayüzü ile başlatmak için;
+
+systemctl set-default multi-user.target
+
+systemctl get-default
