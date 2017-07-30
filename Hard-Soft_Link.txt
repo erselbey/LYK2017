@@ -1,0 +1,50 @@
+——- Linux / Unix Komutu : ln - Symbolic (Soft) ve Hard Link Oluşturulması ——-
+
+
+Symbolic link'ler bir dosyadan bir dosya bir kısaltma ifade ederler. Shortcut gibi düşünülebilinirler.
+
+Symbolic (Soft) link'ler dosyanın veya klasörün şu anda bulunduğu dizinin yerine bağlantı yaparlar.
+
+Hard link'ler ise dosya veya klasörün şu anda bulunduğu fiziksel lokasyonuna bağlantı yaparlar.
+
+
+
+Symbolic Link Oluşturulması:
+
+######################################################################################################
+
+ln -s /home/users/applmgr/berke_deneme_calisma/dosya1 /home/users/applmgr/dosya2
+
+######################################################################################################
+
+
+Buradaki komutu çalıştırdığımız zaman dosya2 adlı bir link oluşturmuş oluruz. Bu link sayesinde dosya2 den dosya1'e direk olarak erişebiliriz. Bu durumda more komutuyla aşağıdaki gibi dosya2'yi çalıştırırsak dosya1'i okuyabiliriz ve kısayol oluşturmuş oluruz.
+
+
+######################################################################################################
+
+more dosya2 
+
+######################################################################################################
+
+
+——- Hard Link Oluşturulması: ——-
+
+Hard link'ler ise -s argumanı olmadan çalıştırılırlar. Aşağıdaki gibi bir örnek komutla çalıştırılabilir.
+
+######################################################################################################
+
+ln /root/dosya1 /root/dosya2
+
+######################################################################################################
+
+Hard Link vs Soft Link - Farkları: 
+
+Hard link'ler klasörler için yaratılamazlar.
+
+Soft linkler klasörler için yaratılabilinirler.
+
+
+Soft link'lerin yeri değiştiği zaman kullanılamaz hale gelirken Hard link'ler dosyanın fiziksel konumuna bağlantı yaptığı için bağlantı yapılan dosyaların yeri değişse bile bağlantı kopmaz.
+
+Ayrıca 2 disk arasında hardlink olmaz!
