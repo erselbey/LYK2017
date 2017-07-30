@@ -1,0 +1,38 @@
+——- Linux’da Dosya Sahipliği görme ve değiştirme ——-
+
+Linux sunucularda bir site içerisindeki dosyanın sahibi Apache veya root olarak gözüküyorsa bu dosya üzerinde diğer kullanıcıların hatta site sahibinin bile izinleri kısıtlıdır ve yazma vb. işlemleri yapması mümkün değildir.
+Site sahibinin işlem yapabilmesi için dosya sahipliğinin değiştirilmesi gerekmektedir.
+
+Tabi önce root kullanıcısı ile giriş yapmalısınız.
+
+Hızlıca anlatmak gerekirse;
+1- Ssh root ile sunucunuza bağlanınız.
+
+2- cd /home/user/dosya komutu ile ilgili sitenin dosyalarının olduğu yere gidiniz.
+
+3- ls -al komutu ile dosya listesini ve dosya sahipliklerini görebilirsiniz. Eğer sorun yaşadığınız yer bir alt dizin içinde ise cd alt dizin komutu ile oraya girerek orada ls- al komutu ile dosya sahipliklerine bakabilirsiniz.
+
+4- 
+
+######################################################################################################
+
+chown -R ftpadi:kullanici dosyaVEYAkdizinAdi
+
+######################################################################################################
+
+şeklinde komutu girerek dosya sahipliğini değiştirebilirsiniz. Dizin ve alt dizinlerinde değişiklik yapmayacaksanız -R kullanmanıza gerek yok yani sorun tek dosyadaysa gerek kalmaz..
+Eğer dizin altındaki tüm dosyalar üzerinde bu işlemi yapmak istiyorsanız
+
+######################################################################################################
+
+chown -R onurcanalp:onur *
+
+######################################################################################################
+
+komutunu kullanabilirsiniz.
+
+chown komutunun parametreleri ve genel kullanımı ile ilgili daha detaylı bilgiler için —-help kullanmanız yeterli olacaktır. Bu kadarı bu işlem için yeterli olur size
+
+Bu komutu kullanırken hangi dizinde olduğunuza veya neredeki dosyaların sahipliğini değiştirdiğinize çok dikkat etmelisiniz. Aksi takdirde çok büyük sorunlar oluşabilir.
+
+Kaynak: http://www.onurcanalp.com/2013/06/24/linux-da-dosya-sahipligini-gorme-ve-degistirme-chown-komutu/
