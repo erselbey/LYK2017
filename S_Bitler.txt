@@ -50,7 +50,6 @@ ihtiyaç duyarlar.  Bir programa SGID hakkı vermek üzere chmod komutu ile g+s
 
 kullanılabilir:
 
-
 $  ls -l /home/ersin/yazici   komutu verildiğinde çıktısı şöyle olur.
 
 -rw-r--r--   1 root root 2301 May 15 01:26   /home/ersin/yazici
