@@ -1,0 +1,87 @@
+LINUX SUID, SGID ve Sticky Bitleri
+—————————————————————————————————————————————————————————————————————————————————
+
+Açılımları şöyle
+
+SUID :   Set User ID 
+
+SGID :   Set Group ID 
+
+—————————————————————————————————————————————————————————————————————————————————
+
+SUID : (Set User ID )
+
+Kimi zaman bir dosyayı bütün bütün kullanıcıların root yetkisiyle çalıştırması gerekebilir. Ancak
+
+tüm kullanıcıların root parolasını bilmesi istenen durum değildir.  Böyle bir durumda dosyaya suid
+
+yetkisi  verilir.
+
+$ ls -l /etc/passwd   komutu verildiğinde çıktısı şöyle olur.
+
+-rw-r--r--   1 root root 2301 May 15 01:26   /etc/passwd
+
+Bir dosyaya SUID hakkı vermek üzere chmod komutu ile u+s  hak belirleyicisi kullanılabilir.
+
+
+$ sudo chmod u+s  /etc/passwd   komutu verildiğimizde  bu dosyaya suid hakkı vermiş oluyoruz.
+
+Çıktısı şöyle olacak:
+
+-rwSr--r--   1 root root 2301 May 15 01:26   /etc/passwd
+
+görüldüğü üzre dosyanın erişim hakkı değişti.
+
+Yukarıdaki komutun   çalıştırılması halinde, komutun işletilmesinden sonra sisteme
+
+giriş yapan her kullanıcı root yetkileri ile donatılmış olacaktır.
+
+Bu örnek, bir  sisteminde  denenmemeyi gerektirecek kadar tehlikelidir!
+
+—————————————————————————————————————————————————————————————————————————————————
+
+SGID : (Set Group ID )
+
+SUID ile benzer biçimde, bazı programların çalışmaları süresince belli bir kullanıcı grubunun üyesi 
+
+olarak çalışması gerekli olabilir.  Örneğin yazıcı hizmetleri ile ilgili yazılımlar bu türden haklara 
+
+ihtiyaç duyarlar.  Bir programa SGID hakkı vermek üzere chmod komutu ile g+s  hak belirleyicisi 
+
+kullanılabilir:
+
+
+$  ls -l /home/ersin/yazici   komutu verildiğinde çıktısı şöyle olur.
+
+-rw-r--r--   1 root root 2301 May 15 01:26   /home/ersin/yazici
+
+$   sudo chmod g+s  /home/ersin/yazici    komutu verildiğimizde  bu dosyaya sgid hakkı vermiş oluyoruz.
+
+Çıktısı şöyle olacak:
+
+-rw-r-Sr--  1 aspa aspa     0 May 16 23:56  /home/ersin/yazici
+
+—————————————————————————————————————————————————————————————————————————————————
+                                               
+Sticky
+
+Tüm kullanıcıların yaz-boz tahtası olarak kullanabileceği dizin /tmp 'dir.  Kullanıcılar tarafından 
+
+işletilen tüm  programlar geçici dosyalarını bu dizinde yaratır ve işleri bittiğinde siler.  Ancak bu 
+
+dizine tüm kullanıcıların  okuma ve yazma hakkı ile erişmesi durumunda kullanıcıların bu dizini 
+
+hepten silebilmesi mümkün olacaktır.
+
+Kullanıcıların yalnızca kendilerine ait dizinleri ve dosyaları silebilmesini sağlamak üzere /tmp dizini 
+
+Sticky erişim hakkı ile donatılmıştır:
+
+$  ls -ld  /tmp  komutu verildiğinde çıktısı şöyle olur.
+
+drwxrwxrwt  15  root  root  4096  May  16 23:57  /tmp
+
+Bir dizine sticky erişim hakkı vermek üzere chmod u+t hak belirleyicisi kullanılabilir.
+
+
+Kaynak: ersinmertoglu.blogspot.com.tr/2017/05/linux-suid-sgid-ve-sticky-bitleri.html
