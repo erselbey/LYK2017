@@ -1,0 +1,122 @@
+——- Sed Komutları ve Açıklamalar ——-
+
+Metin dosyaları üzerinde sürekli işlem yapanlar için sed ve vi hemen imdada yetişir. Bu iki programın yapabildiklerini etkileşimli olarak bir metin editörü üzerinden gerçekleştirebilmek de mümkündür. sed ve vi tam anlamıyla zaman kaybını önleyen kullanıcı dostu iki uygulamadır. Yapısal olarak diğer programlama dillerinden biraz farklı olduklarından öğrenmesi biraz zaman alır. Buna rağmen eğer metin editörlüğü işinizin bir parçası ise sed ve vi'ı öğrenip bunlardan verimli bir şekilde yararlanmanız uygun olacaktır.
+
+Sed ve Özellikleri
+
+Sed bir dosyadan veya standart girdiden(klavyeden) bilgi okur ve standart çıktıya (ekrana) okuduğu bilgileri kullanıcının belirlediği düzene sokarak yazar. Bu veriyi de kullanıcı genellikle bir dosyaya yerleştirir.
+
+Sed komut satırında iken veya bir kabuk programı içinden kullanılabilir.
+
+Örnekler
+
+Sed kullanırken en çok başvuracağınız işleç `s' işlecidir. Bir karakteri veya karakter kümesini başka bir diziye çevirmeye yarar. Buna basit bir örnek :
+
+sed 's/hapisane/hapishane/g' dosya
+Komutun sonundaki `g' işleci, sed'e dosyanın tamamını araştırmasını söyler. Eğer bunu kaldırırsanız, sed her satırın başında bulduğu ilk değiştirmeyi yapacak ve satırın geri kalanına dokunmayacaktır.
+
+Aşağıdaki karakterler sed tarafından kullanılan özel karakterler kapsamına girer. Bu karakterlerin herbirisinin anlamı olduğundan dikkatli kullanılmaları gerekir.
+
+.*[]^$\&
+Yukarıdaki karakterleri gözönüne almadan yapılan aşağıdaki gibi bir kullanım hataya yol açar.
+
+sed 's/[J.S. Bach]/[Bach, J.S]/' dosya 
+Bunun yerine her özel karakterin başına `\' karakteri getirilerek özel anlamlarının yitirilmesi sağlanabilir (saklama işlemi). Yukarıda çalışmayan örneği yeniden düzenleyerek yazalım:
+
+sed 's/\[J\.S\. Bach\]/[Bach, J.S ]/' dosya 
+Aynı anda birden çok değiştirme yapabilmek için ise her argüman için -e kullanılır.
+
+sed -e 's/computer/bilgisayar/g' -e 's/server/sunucu/g' dosya
+İçinde '/' karakteri olan bir diziyi değiştirmek için ne yapmalı? Bu, özel karakter sınıfına girdiği için karakterin özel anlamını yitirmesi sağlanır.
+
+sed 's/\/usr\/bin/\/bin/g' dosya
+Düzgün Deyimler (Regular Expressions)
+
+Sed, UNIX üzerinde metin işleyen birçok program gibi düzgün deyimlerden yararlanır. Aşağıdaki bu duruma birkaç örnekle yer veriliyor. '^' karakteri satır başlangıcını gösterir. Bu komut,
+
+sed 's/^Pts /Pazartesi/' dosya
+bir satırın başında ``Pts'' varsa bunu ``Pazartesi'' haline getirir. Dikkat ederseniz komut dahilinde `g' işleci kullanılmamıştır. Çünkü her satırda sadece bir satır başı olabilir.
+
+$ karakteri satır sonunu belirtir. Aşağıdaki örnekte,
+
+sed 's/ $//' dosya
+Sed komutu satır sonundaki tüm boşluk karakterlerini siler. Her satır sonuna ``SATIR_SONU'' karakter kümesini getirmek için
+
+sed 's/$/SATIR_SONU/' dosya
+yazılabilir. Boş bir satırı bulmak için satır başı ve satır sonu belirteçleri birlikte kullanılır.
+
+sed 's/^$/bu daha once bos bir satirdi/' dosya
+`.' (nokta) karakteri herhangi bir karakter anlamına gelir. Örneğin üzerinde işlem yapacağımız dosyada bütün satırlardaki ilk iki karakteri silmek için:
+
+sed 's/^..//' dosya
+Köşeli parantezler birden fazla sayıda karakter içinde seçim yapar.
+
+sed 's/[Oo]pen[Ww]in/openwin/g' dosya
+Alfabedeki iki karakterin arasındaki tüm karakterleri seçmek için köşeli parantezlerin içinde `-' karakteri kullanılabilir. Bu karakter, sağındaki ve solundaki de dahil olmak üzere aradaki tüm harfleri seçer. Örnek dosyadaki tüm büyük harfleri silelim.
+
+sed 's/[A-Z]//g' dosya
+Bir karakter kümesinin dışında kalan karakterleri seçmek için ise `^' kullanılır. Örnek dosyada, rakamların ve küçük harflerin dışındaki tüm harfleri silmek istiyoruz.
+
+sed 's/[^1-9a-z]//g' dosya
+'*' karakteri, kendisinden bir önce gelen karakterin veya küme içine alınmış karakter gruplarının sıfır veya daha fazla tekrarı anlamına gelir.
+
+sed 's/^ *//' dosya
+komutu her satır başındaki boşluk karakterlerini siler. Aşağıdaki sed komutu her satırdaki son kelimeyi (boşluk karakterlerinden oluşmayan karakterler grubunu) siler.
+
+sed 's/[^ ]*$//' dosya
+unutulmaması gereken bir nokta, `*' karakteri önceki grubun sıfır kere tekrarını da gözönüne alır, bu durumda aşağıdaki satırda görülen ve bir tamsayı değerini ``TAMSAYI'' sözcüğü haline getirmek için kullanılan komut Linux tarafından yanlış işletilecektir.
+
+sed 's/ [0-9]* / TAMSAYI /g' dosya
+Bu satır aynı zamanda her boşluk karakterini ``TAMSAYI'' ya çevirir. Bunu engellemek için, en azından bir haneyi arama kapsamına sokmak gerekir:
+
+sed 's/ [0-9][0-9]* / TAMSAYI /g' dosya
+`.* harf kombinasyonu herhangi bir sayıda karakter grubu anlamındadır. Aşağıdaki örnekte, ``ku'' ve ``ik'' arasında ne olursa olsun bulunan satırı değiştirecek ve bunların yerine ``kuru erik'' koyacaktır.
+
+sed 's/ku.*ik/kuru erik/g' dosya
+Buraya kadarki bölümde eşleştirdiğimiz harf veya harf gruplarını ya başka bir forma soktuk ya da tamamen sildik. Ancak sed'in kelime işleme kapasitesi sadece yaptıklarımızla sınırlı değildir. `\(' ve `\)' operatörleri yardımıyla eşleştirildiği anda hafızaya kaydedilen kelime grupları daha sonra tekrar çağırılabilir. Parantezler özel anlamlı karakterlerin anlamlarını yitirmesini sağlamak amacıyla daha önceki kullanıma uygun konulmuşlardır. İlk kullanılan `\(\)' operatörü `\1' adlı alana, ikinci kullanılan `\(\)' operatörü `\2' adlı alana eşleştirilir (kayıt edilir). Aşağıdaki sed komutu,
+
+sed 's/^\([A-Za-z][A-Za-z]*\) \([A-Za-z][A-Za-z]*\)/\2 \1/' dosya
+bir dosyadaki ``isim soyisim'' sırasını ``soyisim isim'' sırasına çevirmekte kullanılabilir. Örnek olarak içeriği aşağıdaki gibi olan bir dosya üzerinde bu komut çalıştırılırsa
+
+Mehmet Kırk
+Biray Çift
+Gürkan Ballı
+
+ekranda aşağıdaki çıktı görünür:
+
+Kırk Mehmet
+Çift Biray
+Ballı Gürkan
+
+Bazı durumlarda tüm dosya üzerinde değil de bazı özellikleri sağlayan satırlar üzerinde işlem yapmak isteyebilirsiniz. Bunun için 'adresleme' yapmanız gerekir. Adresleme işlemi, `s işlecinden hemen önce yapılır. Bu komut ile dosyanın sadece 1 ve 20. satırları arasında işlem yapılacaktır.
+
+sed '1,20s/Karadeniz/Akdeniz/g' dosya
+``Makina'' kelimesiyle başlayan tüm satırlardaki ``Endüstri'' kelimesi yerine ``Elektronik'' kelimesini yerleştirelim.
+
+sed '/^Makina/s/Maden /Elektronik /g' dosya
+``Makina'' kelimesiyle başlamayan tüm satırlara benzer işlemi uygulayalım. `!' karakterinin yerine dikkat edin.
+
+sed '/^Makina/!s/Maden /Elektronik /g' dosya
+Sed Kaynak Dosyası
+
+Eğer sed kaynak satırınız bir iki satıra sığmayacak kadar büyük ise komutları tek dosya altında toplayabilirsiniz. Bu örnekte degistir.sed isimli dosyaya üç satırlık sed komutu yazalım.
+
+s/tiren/tren/g
+s/Pazar/Pazartesi/g
+s/1996/1997/g
+Ardından sed komutunu -f parametresiyle çalıştıralım.
+
+sed -f degistir.sed dosya
+Bunların yerine kendi kendine çalışan bir sed programı yazmaya ne dersiniz ?
+
+#!/usr/bin/sed -f
+# degistir.sed dosyasi
+s/tiren/tren/g
+s/Pazar/Pazartesi/g
+s/1996/1997/g
+Çalıştırmak için dosya izni verdikten sonra
+
+chmod u+x degistir.sed
+Komut satırı üzerinden rahatlıkla çalıştırabiliriz
+
+$ degistir.sed dosya
