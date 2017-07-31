@@ -1,6 +1,5 @@
 ———— Centos Yum Komutları ————
 
-
 YUM ile bir Paket Yükleyin:
 Firefox 14 adlı bir paket yüklemek için aşağıdaki komutu çalıştırmanız yeterlidir; Firefox için gerekli tüm bağımlılıkları otomatik olarak bulur ve yükler.
 ———————————————————————————————————————————————————————————————
@@ -36,6 +35,8 @@ Yukarıdaki komut, sisteminize herhangi bir paket yüklemeden önce onay isteyec
 ———————————————————————————————————————————————————————————————
 # yum -y install firefox
 ———————————————————————————————————————————————————————————————
+
+########################################################################################################################
 
 2. YUM ile bir Paket Çıkarma:
 
@@ -74,19 +75,16 @@ firefox.i686 0:10.0.6-1.el6.centos
 Complete!
 Aynı şekilde yukarıdaki komut, bir paketi çıkarmadan önce onaylamayı isteyecektir. Onay istemini devre dışı bırakmak için, aşağıda gösterildiği gibi -y seçeneğini ekleyin.
 
+########################################################################################################################
+
 ———————————————————————————————————————————————————————————————
 # yum -y remove firefox
 ———————————————————————————————————————————————————————————————
-
-
-YUM’u Kullanarak Paket Güncelleme:
+3.) YUM’u Kullanarak Paket Güncelleme:
 Diyelim ki, MySQL paketinin eski sürümüne sahip olduğunuzu ve en son kararlı sürümüne güncellemek istediğinizi varsayalım. Aşağıdaki komutu çalıştırmanız otomatik olarak tüm bağımlılık sorunlarını çözer ve yükler.
-
-
 ———————————————————————————————————————————————————————————————
 # yum update mysql
 ———————————————————————————————————————————————————————————————
-
 Loaded plugins: fastestmirror
 Dependencies Resolved
 ============================================================================================================
@@ -112,14 +110,13 @@ Updated:
 vsftpd.i386 0:2.0.5-24.el5_8.1
 Complete!
 
-YUM kullanarak bir Paket Listeleme:
-Belirli paketi adıyla aramak için list işlevini kullanın. Örneğin openssh adlı bir paket aramak için komutu kullanın.
+########################################################################################################################
 
+4.) YUM kullanarak bir Paket Listeleme:
+Belirli paketi adıyla aramak için list işlevini kullanın. Örneğin openssh adlı bir paket aramak için komutu kullanın.
 ———————————————————————————————————————————————————————————————
 # yum list openssh
 ———————————————————————————————————————————————————————————————
-
-
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
 * base: mirror.neu.edu.cn
@@ -130,23 +127,19 @@ Loading mirror speeds from cached hostfile
 Installed Packages
 openssh.i386 4.3p2-72.el5_6.3 installed
 Available Packages 4.3p2-82.el5
+
 Aramanızı daha doğru hale getirmek için, paket adını versiyonlarıyla birlikte tanımlayın, biliyorsanız. Örneğin paketin belirli bir sürümünü openssh-4.3p2 aramak için komutu kullanın.
-
-
 ———————————————————————————————————————————————————————————————
 # yum list openssh-4.3p2
 ———————————————————————————————————————————————————————————————
 
+########################################################################################################################
 
-YUM kullanarak bir Paket Arayın
+5.) YUM kullanarak bir Paket Arayın
 Paketin tam adını hatırlamıyorsanız, belirtilen paketin adıyla eşleşen tüm mevcut paketleri aramak için arama işlevini kullanın. Örneğin, kelimeyle eşleşen tüm paketleri aramak için.
-
-
 ———————————————————————————————————————————————————————————————
 # yum search vsftpd
 ———————————————————————————————————————————————————————————————
-
-
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
 * base: mirror.neu.edu.cn
@@ -160,14 +153,9 @@ pure-ftpd-selinux.i386 : SELinux support for Pure-FTPD
 vsftpd.i386 : vsftpd - Very Secure Ftp Daemon
 YUM kullanarak bir Paket Bilgileri Alın
 Kurmadan önce bir paketin bilgilerini öğrenmek istediğinizi söyleyin. Bir paket hakkında bilgi almak için aşağıdaki komutu çalıştırın.
-
-
 ———————————————————————————————————————————————————————————————
 # yum info firefox
 ———————————————————————————————————————————————————————————————
-
-
-
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
 * base: mirror.neu.edu.cn
@@ -187,31 +175,27 @@ URL : http://www.mozilla.org/projects/firefox/
 License : MPLv1.1 or GPLv2+ or LGPLv2+
 Description: Mozilla Firefox is an open-source web browser, designed for standards
 : compliance, performance and portability.
-Kullanılabilir Paketlerin tümünü YUM kullanarak listele:
-Yum veritabanındaki tüm paketleri listelemek için aşağıdaki komutu kullanın.
 
+########################################################################################################################
+
+6.)Kullanılabilir Paketlerin tümünü YUM kullanarak listele:
+Yum veritabanındaki tüm paketleri listelemek için aşağıdaki komutu kullanın.
 ———————————————————————————————————————————————————————————————
 # yum list | less
 ———————————————————————————————————————————————————————————————
-
-
 Yüklü Paketlerin tümünü YUM kullanarak listeleyin:
 Bir sistemde yüklü olan tüm paketleri listelemek için aşağıdaki komutu çalıştırmanız yeterlidir; yüklü olan tüm paketleri görüntüler.
-
 ———————————————————————————————————————————————————————————————
 # yum list installed | less
 ———————————————————————————————————————————————————————————————
 
+########################################################################################################################
 
-Yum Sağlayan Fonksiyonlar:
+7.) Yum Sağlayan Fonksiyonlar:
 Yum , belirli bir dosyanın hangi paketin ait olduğunu bulmak için işlev sağlar. Örneğin, /etc/httpd/conf/httpd.conf dosyasının bulunduğu paketin adını öğrenmek isterseniz.
-
 ———————————————————————————————————————————————————————————————
 # yum provides /etc/httpd/conf/httpd.conf
 ———————————————————————————————————————————————————————————————
-
-
-
 Loaded plugins: fastestmirror
 
 httpd-2.2.3-63.el5.centos.i386 : Apache HTTP Server
@@ -246,30 +230,29 @@ Matched from:
 
 Other : Provides-match: /etc/httpd/conf/httpd.conf
 
-Yum kullanarak Mevcut Güncellemeleri Kontrol Edin:
-Sisteminizde kaç tane yüklü paketin mevcut olduğunu bulmak için aşağıdaki komutu kullanın kontrol edin.
+########################################################################################################################
 
+8.) Yum kullanarak Mevcut Güncellemeleri Kontrol Edin:
+Sisteminizde kaç tane yüklü paketin mevcut olduğunu bulmak için aşağıdaki komutu kullanın kontrol edin.
 ———————————————————————————————————————————————————————————————
 # yum check-update
 ———————————————————————————————————————————————————————————————
 
-Yum kullanarak güncelleme sistemi:
+########################################################################################################################
+
+9.) Yum kullanarak güncelleme sistemi:
 Sisteminizi tüm güvenlik ve ikili paket güncellemeleri ile güncel tutmak için aşağıdaki komutu çalıştırın. Sisteminize en son çıkan tüm yamaları ve güvenlik güncellemelerini yükleyecektir.
-
-
 ———————————————————————————————————————————————————————————————
 # yum update
 ———————————————————————————————————————————————————————————————
 
-Mevcut tüm Grup Paketlerini listele:
+########################################################################################################################
+
+10.) Mevcut tüm Grup Paketlerini listele:
 Linux’ta, paketlerin sayısı belirli gruba dağıtılır. Yum’la bireysel paketler yüklemek yerine, gruba ait tüm ilgili paketleri kuracak belirli bir grubu kurabilirsiniz. Örneğin mevcut tüm grupları listelemek için aşağıdaki komutu verin.
-
-
 ———————————————————————————————————————————————————————————————
 # yum grouplist
 ———————————————————————————————————————————————————————————————
-
-
 Installed Groups:
 Administration Tools
 DNS Name Server
@@ -292,15 +275,14 @@ Eclipse
 Educational Software
 KDE (K Desktop Environment)
 KDE Software Development
-Grup Paketleri Yükleme:
+
+########################################################################################################################
+
+11.)Grup Paketleri Yükleme:
 Belirli bir paket grubunu yüklemek için seçeneği groupinstall olarak kullanın . Örneğin, ” MySQL Veritabanı ” nı yüklemek için aşağıdaki komutu çalıştırmanız yeterlidir.
-
-
 ———————————————————————————————————————————————————————————————
 # yum groupinstall 'MySQL Database'
 ———————————————————————————————————————————————————————————————
-
-
 Dependencies Resolved
 =================================================================================================
 Package Arch Version Repository Size
@@ -329,15 +311,14 @@ unixODBC-libs.i386 0:2.2.11-10.el5
 Updated:
 unixODBC.i386 0:2.2.11-10.el5
 Complete!
-Bir Grup Paketlerini Güncelleme:
+
+########################################################################################################################
+
+12.) Bir Grup Paketlerini Güncelleme:
 Mevcut tüm kurulu grup paketlerini güncellemek için aşağıdaki komutu aşağıda gösterildiği gibi çalıştırın.
-
-
 ———————————————————————————————————————————————————————————————
 # yum groupupdate ‘DNS Name Server’
 ———————————————————————————————————————————————————————————————
-
-
 Dependencies Resolved
 ================================================================================================================
 Package Arch Version Repository Size
@@ -374,16 +355,14 @@ Dependency Updated:
 bind-libs.i386 30:9.3.6-20.P1.el5_8.2 bind-utils.i386 30:9.3.6-20.P1.el5_8.2
 Complete!
 
-15. Bir Grup Paketlerini Kaldırın:
+########################################################################################################################
+
+13. Bir Grup Paketlerini Kaldırın:
 
 Sistemde varolan herhangi bir grubu silmek veya silmek için aşağıdaki komutu kullanın.
-
-
 ———————————————————————————————————————————————————————————————
 # yum groupremove ‘DNS Name Server’
 ———————————————————————————————————————————————————————————————
-
-
 Dependencies Resolved
 ===========================================================================================================
 Package Arch Version Repository Size
@@ -410,15 +389,13 @@ Removed:
 bind.i386 30:9.3.6-20.P1.el5_8.2 bind-chroot.i386 30:9.3.6-20.P1.el5_8.2
 Complete!
 
-Etkin Yum Depolarını Listele:
+########################################################################################################################
+
+14.) Etkin Yum Depolarını Listele:
 Sisteminizdeki tüm etkin Yum depolarını listelemek için aşağıdaki seçeneği kullanın.
-
-
 ———————————————————————————————————————————————————————————————
 # yum repolist
 ———————————————————————————————————————————————————————————————
-
-
 repo id repo name status
 base CentOS-5 – Base enabled: 2,725
 epel Extra Packages for Enterprise Linux 5 – i386 enabled: 5,783
@@ -428,16 +405,14 @@ rpmforge RHEL 5 – RPMforge.net – dag enabled: 11,290
 updates CentOS-5 – Updates enabled: 743
 repolist: 20,824
 
-16. a) Tüm devre dışı ve Engelli Yum Depolarını listele:
+########################################################################################################################
+
+15. a) Tüm devre dışı ve Engelli Yum Depolarını listele:
 
 Aşağıdaki komut, sistemdeki tüm etkin ve devre dışı bırakılmış yum havuzlarını görüntüleyecektir.
-
-
 ———————————————————————————————————————————————————————————————
 # yum repolist all
 ———————————————————————————————————————————————————————————————
-
-
 repo id repo name status
 C5.0-base CentOS-5.0 – Base disabled
 C5.0-centosplus CentOS-5.0 – Plus disabled
@@ -447,14 +422,13 @@ epel Extra Packages for Enterprise Linux 5 – i386 enabled: 5,783
 extras CentOS-5 – Extras enabled: 282
 repolist: 20,824
 
-Belirli Depodan Bir Paket Kurun:
-Belirli bir paketin belirli bir etkinleştirilmiş veya devre dışı bırakılmış depodan yüklenmesi için, yum komutunuzda -enablerepo seçeneğini kullanmanız gerekir. Örneğin PhpMyAdmin 3.5.2 paketini kurmak için komutu çalıştırmanız yeterlidir .
+########################################################################################################################
 
+16.) Belirli Depodan Bir Paket Kurun:
+Belirli bir paketin belirli bir etkinleştirilmiş veya devre dışı bırakılmış depodan yüklenmesi için, yum komutunuzda -enablerepo seçeneğini kullanmanız gerekir. Örneğin PhpMyAdmin 3.5.2 paketini kurmak için komutu çalıştırmanız yeterlidir .
 ———————————————————————————————————————————————————————————————
 # yum –enablerepo=epel install phpmyadmin
 ———————————————————————————————————————————————————————————————
-
-
 Dependencies Resolved
 =============================================================================================
 Package Arch Version Repository Size
@@ -479,16 +453,14 @@ Installed:
 phpMyAdmin.noarch 0:3.5.1-1.el6
 Complete!
 
-18. Etkileşimli Yum Kabuk:
+########################################################################################################################
+
+17. Etkileşimli Yum Kabuk:
 
 Yum yardımcı programı, birden fazla komutu çalıştırabileceğiniz özel bir kabuk sağlar.
-
-
 ———————————————————————————————————————————————————————————————
 # yum shell
 ———————————————————————————————————————————————————————————————
-
-
 Loaded plugins: fastestmirror
 Setting up Yum Shell
 > update httpd
@@ -499,25 +471,24 @@ Loading mirror speeds from cached hostfile
 * updates: mirrors.sin3.sg.voxel.net
 Setting up Update Process
 >
-19. Yum Önbelleğini Temizle
+
+########################################################################################################################
+
+18. Yum Önbelleğini Temizle
 
 Varsayılan olarak yum, tüm önbellek dosyalarını etkin depodan temizlemek için tüm alt havuzda etkinleştirilmiş paket verilerini / var / cache / yum / alt dizininde tutar; tüm önbelleği temizlemek için düzenli olarak aşağıdaki komutu çalıştırmanız gerekir. Aşağıdaki komutun çıktısını vermek istemiyoruz çünkü önbelleğe alınmış verileri olduğu gibi saklamayı severiz.
-
-
 ———————————————————————————————————————————————————————————————
 # yum clean all
 ———————————————————————————————————————————————————————————————
 
+########################################################################################################################
 
-20. Yum’un Tarihini Görüntüle:
+19. Yum’un Tarihini Görüntüle:
 
 Yum komutunun tüm geçmiş işlemlerini görüntülemek için aşağıdaki komutu kullanın.
-
 ———————————————————————————————————————————————————————————————
 # yum history
 ———————————————————————————————————————————————————————————————
-
-
 Loaded plugins: fastestmirror
 ID | Login user | Date and time | Action(s) | Altered
 ——————————————————————————-
