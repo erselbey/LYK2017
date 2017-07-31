@@ -1,6 +1,6 @@
 ———— Centos Yum Komutları ————
 
-YUM ile bir Paket Yükleyin:
+1.) YUM ile bir Paket Yükleyin:
 Firefox 14 adlı bir paket yüklemek için aşağıdaki komutu çalıştırmanız yeterlidir; Firefox için gerekli tüm bağımlılıkları otomatik olarak bulur ve yükler.
 ———————————————————————————————————————————————————————————————
 # yum install firefox
@@ -38,7 +38,7 @@ Yukarıdaki komut, sisteminize herhangi bir paket yüklemeden önce onay isteyec
 
 ########################################################################################################################
 
-2. YUM ile bir Paket Çıkarma:
+2.) YUM ile bir Paket Çıkarma:
 
 Bir paketi tamamen bağımlılıklarıyla kaldırmak için aşağıdaki komutu aşağıda gösterildiği gibi çalıştırın.
 
