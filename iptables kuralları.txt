@@ -1,0 +1,200 @@
+(Linux IPTables) Firewall Ayarları - Bölüm 1
+
+
+Güvenlik duvarı veya Ateş duvarı (Firewall), yerel ağlar üzerindeki kaynaklari diğer networkler üzerinden gelecek saldırılara karşı koruyan, iç ve dış ağlar arası ağ trafiğini tanımlayan kuralları denetleyen bir ağ geçidi çözümüdür. Kısaca belirtmek gerekirse, sistem gelen ve giden paketlerin kaderlerini belirler. IPTables da bu kuralları belirlemek için kullanılan bir  yazılım aracıdır.
+
+
+Temel olarak, bir yönlendirici programi ile çalışan Firewall tek başına bir güvenlik değildir. Sadece TCP/IP katmanında filtre uygular. Paketin içeriği ile ilgilenmez. Bir kişinin güvenlikten geçebilmesi örneğini verebiliriz. Görevli bu kişinin biyolojik bir silah taşıdığını tespit edemez. Fakat kişi güvenlikten geçebilir. Yönlendirici programi ile çalışan Firewall da bunun gibidir. Paket içeriği ile ilgilenmediğinden paketi doğru adrese iletebilir. Paket içeriği zararlı ise bu durumda iletilen adres bundan etkilenecektir.
+
+Firewall (Güvenlik Duvarı) Nedir?
+———————————————————————————————————————
+Firewall(Ateş Duvarı) iç ve dış sistemden gelecek yetkisiz erişimleri engelleyen, süzen ve izin denetimi sağlayan yazılımlar veya donanımlardır. Güvenlik duvarı; virüslerden, solucanlara truva atlarına, istenmeyen adresi engelleme ve kaba kuvvet saldırılarına karşı korur. Güvenlik duvarları bu yönüyle paketin içeriğini de kontrol eder. IPTables firewall’da paket içeriği ile ilgilenmez.
+
+IPTable Nedir?
+———————————————————————
+Modern işletim sistemlerinde, güvenliği artırmak için kurulan firewall’dur. Linux çekirdeğiyke konuşarak paket süzme kurallarını belirler. Daha çok paket yönledendirme ve gelen giden adresleri kontrol eder. Iptables netfilter takımı ve birçokları tarafından geliştirilmiştir. Çoğu linux dağılımlarında kurulu bir şekilde gelir. Iptables kurmak için aşağıdaki komutu kullanabilirsiniz.
+
+
+
+————————————————————————————————————————————————————————————————————
+root@OS: yum install iptables
+————————————————————————————————————————————————————————————————————
+
+#########################################################################################################################################################
+
+
+Kurulduktan sonra kuralları listeleyelim.
+
+
+Farklı servisler için kullanılan farklı protokoller:
+iptables IPv4 için uygulanır.
+ip5tables Ipv6 için uygulanır.
+arptables ARP için uygulanır.
+ebtables Ethernet çerçeveleri için uygulanır.
+
+
+IPTables ana dosyaları:
+/etc/init.d/iptables – başlat|durdur|tekrar başlat ve kuralları kaydet (start|stop|restart|save)
+/etc/sysconfig/iptables – Kuralları kaydedilen yer.
+/sbin/iptables – binary dosyası.
+
+
+Dört farklı bağlama vardır:
+INPUT : Bilgisayarımıza gelen paketler için uygulanacak kuralları içeren zincirdir.
+OUTPUT : Bilgisayarımızdan dışarı giden paketler için uygulanacak kuralları içeren zincirdir.
+FORWARD : Diğer interface sayesinde yönlendirme.
+PREROUTING: Sadece NAT içindir. Gelen paketlerin değiştirilmesi için.
+POSTROUTING: Sadece NAT içindir. Giden paketlerin değiştirmek için.
+RH-Firewall-1-INPUT : Kullanıcı tanımlanmış özel bağlama.
+
+
+
+Özel bağlantı yanıtları:
+Accept: Bağlantıya izin verir.
+Drop: bağlantıyı drop eder. Geriye hata göndermez.
+Reject: Bağlantıya izin vermez ve geriye hata gönderir.
+Return: Zincirlerin sonuna gönderir.
+Queue: Paketler kullanıcı alanına gönderilir.
+
+
+
+#########################################################################################################################################################
+
+
+Zincir(Chains) Nedir?
+————————————————————————
+
+Linux çekirdeği gelen ve giden paketleri yönetmek için chain adı verilen bir kontrol listesine bakar. Bu kontrol listesi paket işleme konulmadan önce ne tür işlemler uygulanacağını belirtin kuralları içerir. Bir kural uymuyorsa diğerine geçerek bir if-then-else yaparak diğer kurala geçer. Örneğin, temel olarak kullanılan INPUT, OUTPUT ve FORWARD dışında tanımlayabildiğimiz kuraldır. Özel bağlantı yanıtlarını örnekleyelim.
+Bağlantı “ACCEPT” edildiğinde:
+-Firewall’da ayar;
+
+————————————————————————————————————————————————————————————————————
+root@OS: iptables -A INPUT -s 192.168.2.12 -j ACCEPT
+————————————————————————————————————————————————————————————————————
+
+-Sunucuya ping sonucu alınan yanıt;
+
+
+#########################################################################################################################################################
+
+
+Bağlantı “DROP” edildiğinde:
+
+-Firewall’da ayar;
+
+————————————————————————————————————————————————————————————————————
+root@OS: iptables -A INPUT -s 192.168.2.12 -j DROP
+————————————————————————————————————————————————————————————————————
+
+-ping sonucu alınan yanıt;
+
+
+
+
+İstek “REJECT” edildiğinde alınan yanıt;
+
+
+
+-Sunucuda yapılan ayar;
+iptables -A INPUT -s 192.168.2.12 -j REJECT
+-Sunucuya ping sonucu alınan yanıt;
+
+
+Güvenlik Duvarı Ayarları (IPTable Ayarları)
+Genel Opsiyonlar
+-A –append: Belirli bir zincirin sonuna bir kural eklemek için kullanılır.
+iptables -A INPUT …
+iptables –A OUTPUT …
+-C –check: Kullanıcı tarafından eklenen zincirden sonra özel kuralları kontrol eder.
+iptables –C INPUT –p tcp –dport 8080 –jump ACCEPT
+-D –delete: Zinciri silmek için kullanılır. Silme işlemi için ya zincir numarası ya da kuralın kendisi yazılmalıdır.
+iptables -D INPUT 1
+iptables -D INPUT -s 192.168.2.12 -j REJECT
+-R –replace: Var olan zinciri değiştirmek için kullanılır.
+iptables -R INPUT 1 -s 192.168.2.12 -j REJECT
+-I –insert: Daha önce belirtilmiş bir zincire, bir zincir eklemek için kullanılır.
+iptables -I INPUT 1 –-dport 80 -j REJECT
+-L –list: Kuralları listelemek için.
+iptables –L  # tüm kurallar
+iptables –L OUTPUT # sadece OUTPUT kuralları listeler
+-F –flush: Zincirdeki kuralları siler.
+iptables –F  # tüm kurallar
+iptables –F OUTPUT # sadece OUTPUT kuralları siler
+-N –new-chain: Yeni bir zincir oluşturur.
+iptables –N LOG_NAME # LOG_NAME  adında yeni bir zincir oluşturur.
+-E –rename-chain: Yeniden adlandırmak için kullanılır.
+iptables –X RENAME LOG_NAME
+-X –delete-chain: Zincirdeki kuralları siler.
+iptables –X # tüm zincirleri siler.
+iptables –X LOG_NAME # LOG_NAME adında zinciri siler.
+-P –policy : Belirtilen zincir içersinde paket herhangi bir kurala uymazsa pakete ne yapılacağını belirtir. ACCEPT, REJECT, DROP … ;
+
+iptables –P INPUT DROP # Gelen paket herhangi bir kurala uymuyorsa drop et
+
+Parametre Opsiyonları
+! : Ayrıcılık tanımak için kullanılır. Örneğin: sadece bir IP adresinden erişime izin verme
+iptables –A INPUT –p tcp –source ! 192.168.12.12 –j DROP
+-p –protocol : Kuralda kullanılacak protokol  tipi seçilir. Tcp, udp, icmp, all, …  
+
+iptables –A INPUT –p tcp –j DROP
+-s –source: Kaynak adresi belirtmek için kullanılır.
+iptables –A INPUT –p tcp –s 192.168.12.12 –j ACCEPT # IP isteklerini kabul et
+-d –destination: Hedef adresi belirtmek için kullanılır.
+iptables –A INPUT –p tcp –d 10.18.12.3 –j ACCEPT
+-i –in-interface: Belirli bir ağ arayüzünden gelen bağlantılara bir kural uygulanır.
+
+iptables –A INPUT –p icmp –i eth0 –j DROP # eth0 den icmp protokolü bağlanılmasın
+-o –out-interface: Belirli bir ağ arayüzünden giden bağlantılara bir kural uygulanır.
+
+iptables –A OUTPUT –p icmp –o eth0 –j DROP
+-j –jump: Kullanıcı tarafından tanımlanan bir koşul oluştuğunda, yine kullanıcı tarafından oluşturulan bir diğer koşula geçiş için kullanılır.
+
+-f --fragment: Kullanılan flaglerin, iki ve daha fazla fragment karşılaştırmak içindir.
+iptables –A OUTPUT –f –d 10.18.12.3 –j DROP
++ : Özelleştirilmiş string karşılaştıran interface’lerin genel arama karakteridir.
+
+Karşılaştırma Opsiyonu
+
+-sport –source-port: Kaynak portu ya da sıra “80:3389” halindeki portları belirtmek için kullanılır. Birden fazla port belirtilecekse –m multiport parametresi kullanılır.
+
+iptables –A INPUT –p tcp –-sport 25 –j DROP
+iptables –A INPUT –p tcp –-sport 80:3389 –j ACCEPT
+iptables –A INPUT –p tcp –m multiport --sport 80,21,110 –j ACCEPT
+-dport –destination-port: Hedef portu ya da sıra “80:3389” halindeki portları belirtmek için kullanılır. Birden fazla port belirtilecekse –m multiport parametresi kullanılır.
+iptables –A OUTPUT –p tcp –-dport 25 –j DROP
+iptables –A OUTPUT –p tcp –-dport 80:3389 –j ACCEPT
+iptables –A OUTPUT –p tcp –m multiport –-dport 80,21,110 –j ACCEPT
+--syn: SYN paket olduğunu kontrol eder.
+--tcp-flags: TCP flaglerine göre kullanılır. ACK, FIN, RST, URG, SYN, PS ve ALL
+--tcp-option: Özel paketle hazırlanmış bir TCP paketini karşılaştırır.
+--icmp-type: Kuralla karşılaştırılmış ICMP’in ismini veya numarasını ayarlamak için kullanılır. ICMP isimlerini “iptables –p icmp –h ” diyerek erişebilirsiniz.
+
+-mac-source: MAC adresini belirtmek için kullanılır. Örneğin belli bir MAC adresinden gelen istekleri drop et.
+iptables –A INPUT –mac-source 02:AE:BC:3D:00:84 –j DROP
+-m –match: Özel bir durum için karşılaştırılırken kullanılır.
+-state: Belirli bir paket durumunu karşılaştırmak için kullanılır. (ESTABLISHED, NEW, INVALID, RELATED (bunlar açıklanabilir.))
+iptables –A OUTPUT –i eth0 –p tcp –dport 21 –m state –state ESTABLISHED  –j DROP
+--limt: Saniye başına eşleşme hızını control etmek için kullanılır.
+
+iptables –A INPUT –m limit –-limit 2/hour
+--limit-burst: Bir seferde kuralda karşılaştırılan paket sayısını sınırlamak için kullanılır. Örneğin: 2 dakikada 10 tane limiti aştığında logla.
+iptables –A INPUT –m limit –-limit 2/minute –-limit-burst 10 –j LOG
+Hedef Opsiyonları
+--log-level: Olay loglama öncelik seviyesini belirlemek için kullanılır.
+--log-ip-options: IP paket başlığında set edilmiş herhangi bir opsiyon loglamak için kullanılır.
+--log-prefix: Ön ek eklemek için kullanılır.
+--log-tcp-options: TCP paket başlığında set edilmiş herhangi bir opsiyon loglamak için kullanılır.
+--log-tcp-sequence: Loglarda paketler için TCP sıra sayısı yazmak için kullanılır. 
+
+Dinleme Opsiyonları
+-v --verbose: daha ayrıntılı çıktı almak için kullanılır.
+-x --exact: verbose kullanıldığında kısaltma değerler kullanılmaktadır. Exact diyerek  bu değeri uzunca gösterilmektedir.
+-n --numeric: Host ismi yerine IP adresini,servis yerine port numarası(www yerine 80 ) gösterilmesi için kullanılır. Bazı değerleri dönüştüremeyebilir.
+-t --table: Kullanılacak table harici başka bir table’a eklemek için kullanılır.
+
+Kaydedilen dosya yerleri;
+/etc/sysconfig/iptables: Iptables kurallarının bulunduğu ve yeni kurallarının eklendiği dosya
+/etc/sysconfig/iptables-config: Iptables servis yazılımı için konfigürasyın dosyası
+
+Bir sonraki makalede örnek yaparak IPTables daha iyi anlamaya çalışacağız.
+
