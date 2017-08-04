@@ -1,0 +1,36 @@
+Linux’da Kullanıcı Oluşturma ve Root Yetkisi Verme
+
+Merhaba,
+
+CentOS veya Redhat üzerinde kullanıcı ekledikten sonra root yetkisi vermek bu adımları uygulamanız yeterlidir. Başlangıçta kullanıcı eklemek aşağıdaki komutu kullanmalısınız.
+
+————————————————————————————————————————————————————————————————————————————————
+useradd kullaniciadi
+————————————————————————————————————————————————————————————————————————————————
+Sonra bu kullanıcıya güvenlik bir şifre belirleyin.
+
+————————————————————————————————————————————————————————————————————————————————
+passwd kullaniciadi
+————————————————————————————————————————————————————————————————————————————————
+Şimdi bu kullanıcıya root yetkisi vermek için konsol ekranına visudo yazın.
+Açılan ekranda aşağıdaki satırı bulun.
+
+————————————————————————————————————————————————————————————————————————————————
+## Allow root to run any commands anywhere
+root ALL=(ALL) ALL
+————————————————————————————————————————————————————————————————————————————————
+Bu kodun altında tanımladığınız yeni kullanıcının bilgilerini girmelisiniz.
+
+————————————————————————————————————————————————————————————————————————————————
+kullaniciadi ALL=(ALL) ALL
+————————————————————————————————————————————————————————————————————————————————
+Shell yetkisini bir sebepten ötürü kapatmak isteyebilirsiniz.
+Bunun için aşağıdaki komutu kullanmalısınız.
+
+————————————————————————————————————————————————————————————————————————————————
+usermod -s /sbin/nologin kullaniciadi
+————————————————————————————————————————————————————————————————————————————————
+Bu işlemler sonucunda shell yetkisi olmayan bir root kullanıcı tanımlamış oldunuz.
+
+
+————————————————————————————————————————————————————————————————————————————————
