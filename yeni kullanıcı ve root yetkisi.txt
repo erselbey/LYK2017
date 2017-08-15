@@ -1,4 +1,4 @@
-Linux’da Kullanıcı Oluşturma ve Root Yetkisi Verme
+﻿Linux’da Kullanıcı Oluşturma ve Root Yetkisi Verme
 
 Merhaba,
 
@@ -34,3 +34,12 @@ Bu işlemler sonucunda shell yetkisi olmayan bir root kullanıcı tanımlamış 
 
 
 ————————————————————————————————————————————————————————————————————————————————
+
+
+Defaults timestamp_timeout=10
+
+(sudo, belirli aralıkta parola sorma)
+--------------
+$ visudo
+--------------
+yukarıda ki kodu yapıştır
