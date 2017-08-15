@@ -1,8 +1,12 @@
+-----------------------------------------------
 figlet -f big "MESAJ VEYA ÝSÝM"
 ---------------------------------------------
-bunun açýlýþta karþýmýza çýkmasýný istiyorsak
 
+
+Bunun açýlýþta karþýmýza çýkmasýný istiyorsak
+
+-----------------------------------------------
 vi .bashrc       
-
+-----------------------------------------------
 
 yukarýdaki komutu yazdýðýmýzda artýk her ssh ile sunucuya login olduðumuzda ya da linux ortamda terminali açtýðýmýzda bu mesaj ile karþýlaþabiliriz.
